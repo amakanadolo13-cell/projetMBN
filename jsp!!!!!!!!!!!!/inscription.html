@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription | MBN</title>
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Créer un compte</h1>
+    <p class="subtitle">Rejoignez la plateforme MBN</p>
+
+    <form id="registerForm" novalidate>
+      <input type="text" id="nom" placeholder="Nom">
+      <input type="text" id="prenom" placeholder="Prénom">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Mot de passe">
+      <input type="password" id="confirm" placeholder="Confirmer le mot de passe">
+
+      <div class="message" id="message"></div>
+
+      <button type="submit">S’inscrire</button>
+    </form>
+
+    <span class="link">
+      Déjà inscrit ? <a href="connexion.html">Connexion</a>
+    </span>
+  </div>
+</div>
+
+<script src="js/inscription.js"></script>
+</body>
+</html>

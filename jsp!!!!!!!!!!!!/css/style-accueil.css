@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* FOND ANIMÉ */
+.background {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(120deg, #eef3ff, #ffffff, #f2f6ff);
+  background-size: 300% 300%;
+  animation: bgMove 14s ease infinite;
+  z-index: -1;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* NAVBAR */
+.header {
+  height: 80px;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+
+.logo img {
+  width: 70px;
+}
+
+nav a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: #5f6f92;
+  font-weight: 500;
+}
+
+nav a.active,
+nav a:hover {
+  color: #1e3c72;
+}
+
+/* HERO */
+.hero-home {
+  height: 70vh;
+  background: url("../assets/images/campus.jpg") center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30,60,114,0.55);
+}
+
+.hero-content {
+  position: relative;
+  color: white;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 44px;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* MAIN */
+.main {
+  padding: 60px 80px;
+}
+
+.section {
+  margin-bottom: 70px;
+}
+
+.section h2 {
+  font-size: 26px;
+  color: #1e3c72;
+  margin-bottom: 30px;
+}
+
+/* PROFILS */
+.profiles {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 220px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: 0.4s;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+}
+
+.profile-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-card span {
+  font-size: 13px;
+  color: #5f6f92;
+}
+
+/* CLUBS */
+.clubs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.club-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: 0.4s;
+}
+
+.club-card:hover {
+  transform: translateY(-6px);
+}
+
+.club-card h4 {
+  color: #1e3c72;
+  margin-bottom: 10px;
+}
+
+.join {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border-radius: 25px;
+  border: none;
+  background: #1e3c72;
+  color: white;
+  cursor: pointer;
+}
+
+/* ÉVÉNEMENTS */
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.date {
+  background: #1e3c72;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-right: 20px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* RECHERCHE */
+.search-box {
+  flex: 1;
+  margin: 0 40px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  font-size: 14px;
+}
+
+.search-box input::placeholder {
+  color: #8a96b0;
+}
+.search-box input:focus {
+  background: white;
+  box-shadow: 0 8px 25px rgba(30,60,114,0.25);
+}

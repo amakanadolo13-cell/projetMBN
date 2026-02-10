@@ -1,0 +1,193 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+/* FOND animé - repris d'Accueil */
+.background{
+  position: fixed;
+  inset:0;
+  background: linear-gradient(120deg, #eef3ff, #ffffff, #f2f6ff);
+  background-size: 300% 300%;
+  animation: bgMove 14s ease infinite;
+  z-index: -1;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* NAVBAR - même style qu'Accueil */
+.header{
+  height:80px;
+  padding:0 60px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter: blur(10px);
+}
+
+.logo img{
+  width:70px;
+}
+
+nav a{
+  margin-left:30px;
+  text-decoration:none;
+  color:#5f6f92;
+  font-weight:500;
+}
+
+nav a.active,
+nav a:hover{
+  color:#1e3c72;
+}
+
+/* RECHERCHE */
+.search-box{
+  flex:1;
+  margin:0 40px;
+}
+
+.search-box input{
+  width:100%;
+  padding:12px 20px;
+  border-radius:30px;
+  border:none;
+  outline:none;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  font-size:14px;
+}
+
+/* CONTENU PROFIL */
+.main{
+  padding:60px 80px;
+}
+
+.profile-section{
+  display:flex;
+  justify-content:center;
+}
+
+.profile-card{
+  display:flex;
+  gap:60px;
+  background:white;
+  padding:50px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.12);
+  max-width:900px;
+  width:100%;
+}
+
+.profile-photo img{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.profile-info{
+  flex:1;
+}
+
+.profile-info h1{
+  font-size:36px;
+  color:#1e3c72;
+}
+
+.profile-info p{
+  font-size:18px;
+  color:#6b7a99;
+  margin-bottom:25px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:15px 20px;
+  font-size:18px;
+}
+
+.info-grid span:nth-child(odd){
+  font-weight:600;
+  color:#1e3c72;
+}
+
+/* BOUTON MODIFIER (utilise même style join d'Accueil pour cohérence) */
+.join{
+  margin-top:30px;
+  padding:12px 35px;
+  border-radius:25px;
+  border:none;
+  background:#1e3c72;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.join:hover{
+  background:#3456a1;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:white;
+  padding:30px;
+  width:420px;
+  border-radius:15px;
+  position:relative;
+}
+
+.modal-content h2{
+  text-align:center;
+  color:#1e3c72;
+  margin-bottom:20px;
+}
+
+.modal-content input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.modal-content button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:#1e3c72;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:24px;
+  cursor:pointer;
+}

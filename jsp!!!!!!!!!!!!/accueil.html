@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil | MBN Global Education</title>
+  <link rel="stylesheet" href="css/style-accueil.css">
+</head>
+<body>
+
+<!-- FOND -->
+<div class="background"></div>
+
+<!-- NAVBAR -->
+<header class="header">
+  <a href="index.html" class="logo">
+    <img src="c:\Users\amaka\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\E8247309FA76CB1824C000977D12CC951E3E61C9\transfers\2026-06\WhatsApp Sticker 2026-02-01 at 21.05.42" alt="MBN">
+  </a>
+
+  <div class="search-box">
+  <input type="text" id="searchInput" placeholder="Rechercher un profil, un club, un événement...">
+</div>
+
+  <nav>
+    <a class="active" href="accueil.html">Accueil</a>
+    <a href="messages.html">Messages</a>
+    <a href="profil.html">Profil</a>
+    <a href="index.html">Déconnexion</a>
+  </nav>
+</header>
+
+<!-- HERO BIENVENUE -->
+<section class="hero-home">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1>Bienvenue sur MBN Global Education</h1>
+    <p>
+      La plateforme commune pour les étudiants, professeurs,
+      clubs et campus du groupe MBN.
+    </p>
+  </div>
+</section>
+
+<!-- CONTENU -->
+<main class="main">
+
+  <!-- PROFILS -->
+  <section class="section">
+    <h2>Profils à la une</h2>
+
+    <div class="profiles">
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/736x/0a/19/7e/0a197ef908d97424b1e18b9b52552eb5.jpg">
+        <h4>M.MBOUSSI</h4>
+        <span>Directeur du Campus de lyon</span>
+      </div>
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/1200x/9d/7f/cd/9d7fcd869c90540afb95b5f0d9b0508c.jpg">
+        <h4>Ketsia.C</h4>
+        <span>Étudiante — ESIIA</span>
+      </div>
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/736x/aa/2f/a1/aa2fa1e0011e89985c448b1b34c964e9.jpg">
+        <h4>M.ATY </h4>
+        <span>Professeur — Relation client </span>
+      </div>
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/736x/94/8f/7b/948f7bc2e77391cba732ffc86225f049.jpg">
+        <h4>Stiven .</h4>
+        <span>Étudiant — Emsp</span>
+      </div>
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/736x/8d/44/d1/8d44d1bbc56cdbfce842848fc002ab08.jpg">
+        <h4>Blanche </h4>
+        <span>Étudiant — DCG </span>
+      </div>
+
+      <div class="profile-card">
+        <img src="https://i.pinimg.com/736x/f2/63/37/f26337907cce687a3fbfed7f13651975.jpg">
+        <h4>Sofia </h4>
+        <span>Chargée de recrutement </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLUBS -->
+  <section class="section">
+    <h2>Clubs & associations</h2>
+
+    <div class="clubs">
+      <div class="club-card">
+        <h4>Club Creatifs & Artistiques</h4>
+        <p>Théatre,danse, dessin & peinture</p>
+        <button class="join">Rejoindre</button>
+      </div>
+
+      <div class="club-card">
+        <h4>Club événementiel</h4>
+        <p>Journée culturel, talent show & sorties extra scolaire</p>
+        <button class="join">Rejoindre</button>
+      </div>
+
+      <div class="club-card">
+        <h4>Club recherche d'alternanace & stage</h4>
+        <p>Aide à la rédaction de cv, simulation d'entretiens & partage d'offres entre élèves</p>
+        <button class="join">Rejoindre</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉVÉNEMENTS -->
+  <section class="section">
+    <h2>Événements à venir</h2>
+
+    <div class="events">
+      <div class="event">
+        <span class="date">27 Février</span>
+        <div>
+          <h4>Journée culturel</h4>
+          <p>Campus de Lyon</p>
+        </div>
+      </div>
+
+      <div class="event">
+        <span class="date">14 Février</span>
+        <div>
+          <h4>Activité extra scolaire</h4>
+          <p>Campus d’Évry- Campus de Lyon</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ----- RECHERCHE -----
+  const searchInput = document.getElementById("searchInput");
+  const items = document.querySelectorAll(".profile-card, .club-card, .event");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      const value = searchInput.value.toLowerCase();
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(value) ? "" : "none";
+      });
+    });
+  }
+
+  // ----- BOUTONS "REJOINDRE" -----
+  document.querySelectorAll(".join").forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.innerText = "Déjà membre";
+      btn.disabled = true;
+    });
+  });
+
+});
+</script>
+
+
+</body>
+</html>

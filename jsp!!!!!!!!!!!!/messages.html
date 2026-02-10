@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Messages | MBN Global Education</title>
+  <link rel="stylesheet" href="css/style-messages.css">
+</head>
+<body>
+
+<div class="background"></div>
+
+<header class="header">
+  <a href="accueil.html" class="logo">
+    <img src="c:\Users\amaka\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\E8247309FA76CB1824C000977D12CC951E3E61C9\transfers\2026-06\WhatsApp Sticker 2026-02-01 at 21.05.42" alt="MBN">
+  </a>
+
+  <div class="search-box">
+    <input type="text" placeholder="Rechercher">
+  </div>
+
+  <nav>
+    <a href="accueil.html">Accueil</a>
+    <a class="active" href="messages.html">Messages</a>
+    <a href="profil.html">Profil</a>
+    <a href="index.html">Déconnexion</a>
+  </nav>
+</header>
+
+<main class="main">
+  <div class="dm-container">
+
+    <!-- LISTE DES DISCUSSIONS -->
+    <aside class="dm-list" id="conversationList">
+      <div class="dm-header">Messages</div>
+
+      <div class="dm-item active" data-user="mmboussi">
+        <img src="https://i.pinimg.com/736x/0a/19/7e/0a197ef908d97424b1e18b9b52552eb5.jpg">
+        <div>
+          <h4>M.MBOUSSI</h4>
+          <p>À tout à l’heure</p>
+        </div>
+        <span>12:40</span>
+      </div>
+
+      <div class="dm-item" data-user="ketsia">
+        <img src="https://i.pinimg.com/1200x/9d/7f/cd/9d7fcd869c90540afb95b5f0d9b0508c.jpg">
+        <div>
+          <h4>Ketsia.C</h4>
+          <p>Merci beaucoup !</p>
+        </div>
+        <span>09:18</span>
+      </div>
+
+      <div class="dm-item" data-user="aty">
+        <img src="https://i.pinimg.com/736x/aa/2f/a1/aa2fa1e0011e89985c448b1b34c964e9.jpg">
+        <div>
+          <h4>M.ATY</h4>
+          <p>Projet validé</p>
+        </div>
+        <span>Hier</span>
+      </div>
+
+      <div class="dm-item" data-user="sofia">
+        <img src="https://i.pinimg.com/736x/f2/63/37/f26337907cce687a3fbfed7f13651975.jpg">
+        <div>
+          <h4>Sofia</h4>
+          <p>Nouvelle offre dispo</p>
+        </div>
+        <span>Hier</span>
+      </div>
+
+    </aside>
+
+    <!-- CHAT -->
+    <section class="dm-chat">
+      <div class="chat-header">
+        <img id="chatAvatar" src="">
+        <h3 id="chatName"></h3>
+      </div>
+
+      <div class="chat-body" id="chatBody"></div>
+
+      <form class="chat-input" id="chatForm">
+        <input type="text" id="chatInput" placeholder="Écrire un message...">
+        <button>➤</button>
+      </form>
+    </section>
+
+  </div>
+</main>
+
+<script src="messages.js"></script>
+</body>
+</html>

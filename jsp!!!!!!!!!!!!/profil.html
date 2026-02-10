@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Profil | MBN Global Education</title>
+  <link rel="stylesheet" href="css/style-profil.css">
+</head>
+<body>
+
+<!-- FOND -->
+<div class="background"></div>
+
+<!-- NAVBAR (identique à accueil) -->
+<header class="header">
+  <a href="index.html" class="logo">
+    <img src="c:\Users\amaka\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\E8247309FA76CB1824C000977D12CC951E3E61C9\transfers\2026-06\WhatsApp Sticker 2026-02-01 at 21.05.42" alt="MBN">
+  </a>
+
+  <nav>
+    <a href="accueil.html">Accueil</a>
+    <a href="messages.html">Messages</a>
+    <a class="active" href="profil.html">Profil</a>
+    <a href="index.html">Déconnexion</a>
+  </nav>
+</header>
+
+<!-- PROFIL -->
+<main class="main">
+  <section class="profile-section">
+    <div class="profile-card">
+
+      <!-- PHOTO -->
+      <div class="profile-photo">
+        <img src="https://i.pinimg.com/736x/7d/ba/e2/7dbae2ef3c2e477d1721004644f55bbd.jpg" alt="Photo de profil">
+      </div>
+
+      <!-- INFOS -->
+      <div class="profile-info">
+        <h1 id="name">Sarah M.</h1>
+        <p id="email">sarahlm@mbn.edu</p>
+
+        <div class="info-grid">
+          <span>École</span><span id="ecole">ESIIA</span>
+          <span>Formation</span><span id="formation">Informatique</span>
+          <span>Niveau</span><span id="niveau">2ème année</span>
+          <span>Campus</span><span id="campus">Lyon</span>
+        </div>
+
+        <button id="btn-edit" class="join">Modifier</button>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Modifier mes informations</h2>
+
+    <form id="editForm">
+      <input type="text" id="inputName" placeholder="Nom">
+      <input type="email" id="inputEmail" placeholder="Email">
+      <input type="text" id="inputEcole" placeholder="École">
+      <input type="text" id="inputFormation" placeholder="Formation">
+      <input type="text" id="inputNiveau" placeholder="Niveau">
+      <input type="text" id="inputCampus" placeholder="Campus">
+      <button type="submit">Enregistrer</button>
+    </form>
+  </div>
+</div>
+
+<script src="profil.js"></script>
+</body>
+</html>

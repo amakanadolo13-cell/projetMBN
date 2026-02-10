@@ -1,0 +1,144 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", "Poppins", sans-serif;
+}
+
+/* BASE */
+html, body {
+  height: 100%;
+}
+
+/* FOND ANIMÉ */
+.background {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    #eef3ff,
+    #ffffff,
+    #f2f6ff
+  );
+  background-size: 300% 300%;
+  animation: gradientMove 14s ease infinite;
+  z-index: -1;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* CONTAINER PRINCIPAL */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: fadeInUp 1s ease;
+  padding: 20px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* LOGO */
+.logo {
+  width: 95px;
+  margin-bottom: 30px;
+  transition: transform 0.4s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* TITRES */
+.auth-container h1 {
+  font-size: 38px;
+  color: #1e3c72;
+  margin-bottom: 8px;
+}
+
+.auth-container p {
+  font-size: 15px;
+  color: #5f6f92;
+  margin-bottom: 35px;
+  max-width: 420px;
+}
+
+/* FORMULAIRE */
+form {
+  width: 100%;
+  max-width: 340px;
+}
+
+/* CHAMPS */
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #d9e0f0;
+  font-size: 14px;
+  background: rgba(255,255,255,0.95);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #1e3c72;
+  box-shadow: 0 0 0 2px rgba(30,60,114,0.1);
+}
+
+/* BOUTON */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(30,60,114,0.3);
+}
+
+/* TEXTE BAS */
+span {
+  margin-top: 22px;
+  font-size: 14px;
+  color: #5f6f92;
+}
+
+/* LIENS */
+a {
+  color: #1e3c72;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2a5298;
+}

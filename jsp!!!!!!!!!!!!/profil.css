@@ -1,0 +1,173 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:linear-gradient(120deg,#eef3ff,#ffffff);
+    min-height:100vh;
+}
+
+/* NAVBAR */
+.navbar{
+    height:70px;
+    padding:0 50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:white;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.logo{
+    font-weight:700;
+    font-size:20px;
+    color:#1e3c72;
+}
+
+.nav-center a,
+.nav-right a{
+    margin-left:30px;
+    text-decoration:none;
+    color:#5f6f92;
+    font-weight:500;
+}
+
+.nav-center a:hover,
+.nav-right a:hover,
+.nav-right .active{
+    color:#1e3c72;
+}
+
+.logout{
+    color:#c0392b;
+}
+
+/* CONTENU */
+.main-content{
+    padding:80px 60px;
+    display:flex;
+    justify-content:center;
+}
+
+/* CARD PROFIL */
+.profile-card{
+    width:100%;
+    max-width:1100px;
+    background:white;
+    border-radius:20px;
+    padding:50px;
+    display:flex;
+    gap:60px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+}
+
+/* PHOTO */
+.profile-photo img{
+    width:220px;
+    height:220px;
+    object-fit:cover;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* INFOS */
+.profile-info{
+    flex:1;
+}
+
+.profile-info h1{
+    font-size:36px;
+    color:#1e3c72;
+}
+
+.profile-info p{
+    font-size:18px;
+    color:#6b7a99;
+    margin-bottom:30px;
+}
+
+/* GRILLE */
+.info-grid{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:15px 20px;
+    font-size:18px;
+}
+
+.info-grid span:nth-child(odd){
+    font-weight:600;
+    color:#1e3c72;
+}
+
+/* BOUTON */
+.btn-edit{
+    margin-top:35px;
+    padding:12px 35px;
+    border-radius:30px;
+    border:1px solid #1e3c72;
+    background:transparent;
+    color:#1e3c72;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-edit:hover{
+    background:#1e3c72;
+    color:white;
+}
+
+/* MODAL */
+.modal{
+    display:none;              /* caché au chargement */
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+
+.modal-content{
+    background:white;
+    padding:30px;
+    width:420px;
+    border-radius:15px;
+    position:relative;
+}
+
+.modal-content h2{
+    text-align:center;
+    color:#1e3c72;
+    margin-bottom:20px;
+}
+
+.modal-content input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.modal-content button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:#1e3c72;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    font-size:24px;
+    cursor:pointer;
+}
