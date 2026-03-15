@@ -1,0 +1,259 @@
+// This is your Prisma schema file
+// SubPay Africa - Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  SUPPORT
+}
+
+enum KYCStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum OrderStatus {
+  PENDING
+  PAYMENT_INITIATED
+  PAYMENT_CONFIRMED
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentProvider {
+  ORANGE_MONEY
+  MTN_MOMO
+  AIRTEL_MONEY
+  MOOV_MONEY
+  CORIS_MONEY
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESSFUL
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum SubscriptionService {
+  NETFLIX
+  SPOTIFY
+  APPLE_MUSIC
+  PSN
+}
+
+enum CountryCode {
+  CD  // Congo DRC
+  CG  // Congo Brazzaville
+  GA  // Gabon
+  CM  // Cameroun
+  BF  // Burkina Faso
+}
+
+// ============================================================
+// MODELS
+// ============================================================
+
+model User {
+  id            String      @id @default(uuid())
+  phone         String      @unique
+  email         String?     @unique
+  firstName     String?
+  lastName      String?
+  passwordHash  String
+  country       CountryCode
+  role          UserRole    @default(CUSTOMER)
+  kycStatus     KYCStatus   @default(PENDING)
+  isActive      Boolean     @default(true)
+  pushToken     String?     // Expo push notification token
+
+  // Relations
+  orders        Order[]
+  payments      Payment[]
+  refreshTokens RefreshToken[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([phone])
+  @@index([country])
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  isRevoked Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model Country {
+  code            CountryCode       @id
+  name            String
+  currencyCode    String            // XAF, CDF, XOF
+  currencySymbol  String
+  phonePrefix     String
+  providers       Json              // Array of available PaymentProvider
+  usdExchangeRate Float             @default(1.0)
+  isActive        Boolean           @default(true)
+
+  updatedAt       DateTime          @updatedAt
+
+  @@map("countries")
+}
+
+model SubscriptionProduct {
+  id              String              @id @default(uuid())
+  service         SubscriptionService
+  name            String              // "Netflix Standard", "Spotify Premium"
+  description     String?
+  durationDays    Int                 // 30, 90, 365
+  priceUSD        Float               // Base price in USD
+  reloadlyProductId Int?              // Reloadly product ID
+  deepLinkIOS     String?
+  deepLinkAndroid String?
+  redeemUrl       String?
+  iconUrl         String?
+  isActive        Boolean             @default(true)
+
+  // Relations
+  orders          Order[]
+  pricings        ProductPricing[]
+
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([service])
+  @@map("subscription_products")
+}
+
+model ProductPricing {
+  id          String              @id @default(uuid())
+  productId   String
+  product     SubscriptionProduct @relation(fields: [productId], references: [id])
+  country     CountryCode
+  priceLocal  Float               // Price in local currency
+  currency    String              // XAF, CDF, XOF
+  markup      Float               @default(0.15) // 15% margin
+  isActive    Boolean             @default(true)
+
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([productId, country])
+  @@map("product_pricings")
+}
+
+model Order {
+  id              String              @id @default(uuid())
+  orderNumber     String              @unique // ORD-2024-XXXXX
+  userId          String
+  user            User                @relation(fields: [userId], references: [id])
+  productId       String
+  product         SubscriptionProduct @relation(fields: [productId], references: [id])
+
+  status          OrderStatus         @default(PENDING)
+  country         CountryCode
+  currency        String
+  amountLocal     Float               // Amount in local currency
+  amountUSD       Float               // Amount in USD
+
+  // Delivery info (after successful payment)
+  activationCode  String?             // Gift card code (encrypted)
+  pinCode         String?             // PIN if applicable
+  redeemUrl       String?
+  reloadlyTxId    String?
+
+  // Metadata
+  notes           String?
+
+  // Relations
+  payment         Payment?
+
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  completedAt     DateTime?
+
+  @@index([userId])
+  @@index([status])
+  @@index([orderNumber])
+  @@map("orders")
+}
+
+model Payment {
+  id                String          @id @default(uuid())
+  orderId           String          @unique
+  order             Order           @relation(fields: [orderId], references: [id])
+  userId            String
+  user              User            @relation(fields: [userId], references: [id])
+
+  provider          PaymentProvider
+  status            PaymentStatus   @default(PENDING)
+
+  // Provider-specific data
+  providerTxId      String?         // Transaction ID from provider
+  providerRef       String?         // Reference from provider
+  ussdPushSent      Boolean         @default(false)
+
+  // Amount
+  amount            Float
+  currency          String
+
+  // Phone used for payment
+  paymentPhone      String
+
+  // Webhook data
+  webhookData       Json?
+  webhookReceivedAt DateTime?
+
+  // Retry logic
+  retryCount        Int             @default(0)
+  lastRetryAt       DateTime?
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([userId])
+  @@index([orderId])
+  @@index([providerTxId])
+  @@map("payments")
+}
+
+model TransactionLog {
+  id          String   @id @default(uuid())
+  type        String   // PAYMENT_INIT, PAYMENT_SUCCESS, ORDER_COMPLETED, etc.
+  orderId     String?
+  paymentId   String?
+  userId      String?
+  data        Json
+  createdAt   DateTime @default(now())
+
+  @@index([orderId])
+  @@index([userId])
+  @@map("transaction_logs")
+}
