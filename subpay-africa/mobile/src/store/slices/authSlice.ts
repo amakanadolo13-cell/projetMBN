@@ -96,6 +96,20 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    loginDemo: (state) => {
+      state.isAuthenticated = true;
+      state.isLoading = false;
+      state.error = null;
+      state.accessToken = 'demo-token';
+      state.user = {
+        id: 'demo-user',
+        phone: '+237600000000',
+        firstName: 'Utilisateur',
+        lastName: 'Démo',
+        country: 'CM',
+        role: 'USER',
+      };
+    },
   },
   extraReducers: (builder) => {
     // Login
@@ -151,5 +165,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearError, setUser } = authSlice.actions;
+export const { clearError, setUser, loginDemo } = authSlice.actions;
 export default authSlice.reducer;

@@ -70,7 +70,7 @@ function MainTabs() {
         tabBarStyle: {
           position: 'absolute',
           borderTopWidth: 0,
-          backgroundColor: isDark ? 'rgba(15,10,30,0.85)' : 'rgba(255,255,255,0.85)',
+          backgroundColor: isDark ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.92)',
           borderTopColor: theme.border,
           height: Platform.OS === 'ios' ? 85 : 65,
           paddingBottom: Platform.OS === 'ios' ? 20 : 10,

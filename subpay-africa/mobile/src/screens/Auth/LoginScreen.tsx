@@ -11,7 +11,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
 
 import { AppDispatch, RootState } from '../../store';
-import { login, clearError } from '../../store/slices/authSlice';
+import { login, clearError, loginDemo } from '../../store/slices/authSlice';
+import { loadDemoProducts } from '../../store/slices/catalogSlice';
 import { Colors } from '../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import CountrySelector from '../../components/CountrySelector';
@@ -47,6 +48,11 @@ export default function LoginScreen() {
     if (login.fulfilled.match(result)) {
       navigation.replace('MainTabs');
     }
+  }
+
+  function handleDemoLogin() {
+    dispatch(loginDemo());
+    dispatch(loadDemoProducts());
   }
 
   return (
@@ -136,18 +142,19 @@ export default function LoginScreen() {
               onPress={handleLogin}
               activeOpacity={0.85}
               disabled={isLoading || !phone || !password}
-              style={{ marginTop: 8 }}
+              style={[styles.loginButton, (!phone || !password) && styles.buttonDisabled]}
             >
-              <LinearGradient
-                colors={[Colors.primary, Colors.primaryDark]}
-                style={[styles.loginButton, (!phone || !password) && styles.buttonDisabled]}
-              >
-                {isLoading ? (
-                  <ActivityIndicator color="#FFFFFF" size="small" />
-                ) : (
-                  <Text style={styles.loginButtonText}>Se connecter</Text>
-                )}
-              </LinearGradient>
+              {isLoading ? (
+                <ActivityIndicator color="#FFFFFF" size="small" />
+              ) : (
+                <Text style={styles.loginButtonText}>Se connecter</Text>
+              )}
+            </TouchableOpacity>
+
+            {/* Demo button */}
+            <TouchableOpacity onPress={handleDemoLogin} style={styles.demoButton} activeOpacity={0.75}>
+              <Ionicons name="flask-outline" size={16} color="rgba(255,255,255,0.7)" />
+              <Text style={styles.demoButtonText}>Mode Démo — voir l'application</Text>
             </TouchableOpacity>
 
             {/* Register link */}
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   prefixBadge: {
-    backgroundColor: 'rgba(124,58,237,0.3)',
+    backgroundColor: 'rgba(255,255,255,0.12)',
     paddingHorizontal: 14,
     justifyContent: 'center',
     borderRightWidth: 1,
@@ -217,10 +224,23 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     marginTop: 8,
+    backgroundColor: '#FFFFFF',
   },
-  buttonDisabled: { opacity: 0.5 },
-  loginButtonText: { color: '#FFFFFF', fontSize: 17, fontWeight: '700' },
+  buttonDisabled: { opacity: 0.4 },
+  loginButtonText: { color: '#000000', fontSize: 17, fontWeight: '700' },
+  demoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.05)',
+  },
+  demoButtonText: { color: 'rgba(255,255,255,0.7)', fontSize: 15, fontWeight: '500' },
   registerLink: { flexDirection: 'row', justifyContent: 'center', marginTop: 20 },
   registerText: { color: 'rgba(255,255,255,0.5)', fontSize: 14 },
-  registerTextBold: { color: Colors.primaryLight, fontSize: 14, fontWeight: '700' },
+  registerTextBold: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
 });

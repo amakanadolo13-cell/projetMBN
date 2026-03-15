@@ -2,13 +2,10 @@ import React, { useRef, useState } from 'react';
 import {
   View, Text, StyleSheet, Dimensions, TouchableOpacity, FlatList,
 } from 'react-native';
-import Animated, {
-  useSharedValue, useAnimatedStyle, withTiming, interpolate, Extrapolation,
-} from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Colors, Typography, Spacing } from '../../theme';
+import { Colors } from '../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 
 const { width } = Dimensions.get('window');
@@ -19,7 +16,6 @@ const SLIDES = [
     emoji: '🌍',
     title: 'Netflix, Spotify & Plus',
     subtitle: 'Accédez à vos services favoris depuis l\'Afrique Centrale en quelques secondes.',
-    gradient: ['#0F0A1E', '#1A0B3D'] as const,
     accent: Colors.netflix,
   },
   {
@@ -27,7 +23,6 @@ const SLIDES = [
     emoji: '📱',
     title: 'Payez avec Orange Money, MTN ou Airtel',
     subtitle: 'Utilisez votre Mobile Money local. Aucune carte bancaire internationale requise.',
-    gradient: ['#0F0A1E', '#1A2B0D'] as const,
     accent: Colors.spotify,
   },
   {
@@ -35,8 +30,7 @@ const SLIDES = [
     emoji: '⚡',
     title: 'Activation Instantanée',
     subtitle: 'Dès que votre paiement est confirmé, votre abonnement s\'active immédiatement.',
-    gradient: ['#0F0A1E', '#1A0B2D'] as const,
-    accent: Colors.primary,
+    accent: '#FFFFFF',
   },
 ];
 
@@ -44,7 +38,6 @@ export default function OnboardingScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
-  const scrollX = useSharedValue(0);
 
   function handleNext() {
     if (currentIndex < SLIDES.length - 1) {
@@ -62,7 +55,7 @@ export default function OnboardingScreen() {
 
   return (
     <LinearGradient
-      colors={['#0F0A1E', '#1A0B3D']}
+      colors={['#000000', '#111111']}
       style={styles.container}
     >
       <FlatList
@@ -73,7 +66,6 @@ export default function OnboardingScreen() {
         showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
         keyExtractor={(item) => item.id}
-        onScroll={(e) => { scrollX.value = e.nativeEvent.contentOffset.x; }}
         renderItem={({ item }) => (
           <View style={[styles.slide, { width }]}>
             <View style={styles.emojiContainer}>
@@ -94,7 +86,7 @@ export default function OnboardingScreen() {
               styles.dot,
               {
                 width: i === currentIndex ? 24 : 8,
-                backgroundColor: i === currentIndex ? Colors.primary : 'rgba(255,255,255,0.3)',
+                backgroundColor: i === currentIndex ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
               },
             ]}
           />
@@ -107,15 +99,10 @@ export default function OnboardingScreen() {
           <Text style={styles.skipText}>Ignorer</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleNext} activeOpacity={0.85}>
-          <LinearGradient
-            colors={[Colors.primary, Colors.primaryDark]}
-            style={styles.nextButton}
-          >
-            <Text style={styles.nextText}>
-              {currentIndex === SLIDES.length - 1 ? 'Commencer' : 'Suivant'}
-            </Text>
-          </LinearGradient>
+        <TouchableOpacity onPress={handleNext} activeOpacity={0.85} style={styles.nextButton}>
+          <Text style={styles.nextText}>
+            {currentIndex === SLIDES.length - 1 ? 'Commencer' : 'Suivant'}
+          </Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -135,12 +122,12 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 40,
-    backgroundColor: 'rgba(124, 58, 237, 0.15)',
+    backgroundColor: 'rgba(255,255,255,0.07)',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
     borderWidth: 1,
-    borderColor: 'rgba(124, 58, 237, 0.3)',
+    borderColor: 'rgba(255,255,255,0.12)',
   },
   emoji: { fontSize: 64 },
   title: {
@@ -153,7 +140,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: 'rgba(255,255,255,0.65)',
+    color: 'rgba(255,255,255,0.55)',
     textAlign: 'center',
     lineHeight: 24,
   },
@@ -167,7 +154,6 @@ const styles = StyleSheet.create({
   dot: {
     height: 8,
     borderRadius: 4,
-    transition: 'width 0.3s',
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -180,7 +166,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   skipText: {
-    color: 'rgba(255,255,255,0.5)',
+    color: 'rgba(255,255,255,0.45)',
     fontSize: 15,
     fontWeight: '500',
   },
@@ -188,9 +174,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 40,
     borderRadius: 16,
+    backgroundColor: '#FFFFFF',
   },
   nextText: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 16,
     fontWeight: '700',
   },

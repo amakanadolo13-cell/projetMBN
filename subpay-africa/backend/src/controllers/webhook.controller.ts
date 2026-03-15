@@ -1,7 +1,26 @@
 import { Request, Response } from 'express';
+import crypto from 'crypto';
 import prisma from '../config/database';
 import { notificationService } from '../services/notification.service';
 import { processOrderActivation } from './order.controller';
+
+function verifyHmacSignature(
+  payload: string,
+  signature: string | undefined,
+  secret: string | undefined
+): boolean {
+  if (!secret) return true; // Pas de secret configuré = sandbox
+  if (!signature) return false;
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
 
 // Valider et traiter le paiement confirmé
 async function handlePaymentSuccess(orderId: string, txnId: string, amount: number): Promise<void> {
@@ -73,6 +92,13 @@ async function handlePaymentFailure(orderId: string): Promise<void> {
 // Webhook Orange Money
 export async function handleOrangeWebhook(req: Request, res: Response): Promise<void> {
   try {
+    const rawBody = JSON.stringify(req.body);
+    const signature = req.headers['x-orange-signature'] as string;
+    if (!verifyHmacSignature(rawBody, signature, process.env.WEBHOOK_SECRET_ORANGE)) {
+      res.status(401).json({ status: 'UNAUTHORIZED' });
+      return;
+    }
+
     const payload = req.body;
 
     await prisma.transactionLog.create({
@@ -95,6 +121,13 @@ export async function handleOrangeWebhook(req: Request, res: Response): Promise<
 // Webhook MTN MoMo
 export async function handleMTNWebhook(req: Request, res: Response): Promise<void> {
   try {
+    const rawBody = JSON.stringify(req.body);
+    const signature = req.headers['x-mtn-signature'] as string;
+    if (!verifyHmacSignature(rawBody, signature, process.env.WEBHOOK_SECRET_MTN)) {
+      res.status(401).json({ status: 'UNAUTHORIZED' });
+      return;
+    }
+
     const payload = req.body;
 
     await prisma.transactionLog.create({
@@ -127,6 +160,13 @@ export async function handleMTNWebhook(req: Request, res: Response): Promise<voi
 // Webhook Airtel Money
 export async function handleAirtelWebhook(req: Request, res: Response): Promise<void> {
   try {
+    const rawBody = JSON.stringify(req.body);
+    const signature = req.headers['x-airtel-signature'] as string;
+    if (!verifyHmacSignature(rawBody, signature, process.env.WEBHOOK_SECRET_AIRTEL)) {
+      res.status(401).json({ status: 'UNAUTHORIZED' });
+      return;
+    }
+
     const payload = req.body;
 
     await prisma.transactionLog.create({

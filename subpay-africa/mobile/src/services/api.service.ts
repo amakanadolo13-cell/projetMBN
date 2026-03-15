@@ -8,6 +8,11 @@ class ApiService {
   private client: AxiosInstance;
   private isRefreshing = false;
   private refreshQueue: Array<(token: string) => void> = [];
+  get!: AxiosInstance['get'];
+  post!: AxiosInstance['post'];
+  put!: AxiosInstance['put'];
+  patch!: AxiosInstance['patch'];
+  delete!: AxiosInstance['delete'];
 
   constructor() {
     this.client = axios.create({
@@ -18,6 +23,12 @@ class ApiService {
         Accept: 'application/json',
       },
     });
+
+    this.get = this.client.get.bind(this.client);
+    this.post = this.client.post.bind(this.client);
+    this.put = this.client.put.bind(this.client);
+    this.patch = this.client.patch.bind(this.client);
+    this.delete = this.client.delete.bind(this.client);
 
     this.setupInterceptors();
   }
@@ -81,11 +92,6 @@ class ApiService {
     );
   }
 
-  get = this.client.get.bind(this.client);
-  post = this.client.post.bind(this.client);
-  put = this.client.put.bind(this.client);
-  patch = this.client.patch.bind(this.client);
-  delete = this.client.delete.bind(this.client);
 }
 
 export const apiService = new ApiService();

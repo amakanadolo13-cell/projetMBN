@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+.expo/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.production
+**/.env
+**/.env.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Prisma generated
+**/prisma/migrations/
+
+# Expo
+**/.expo/
+**/web-build/
+
+# React Native
+**/android/
+**/ios/
+
+# Temp
+*.tmp
+*.temp

@@ -324,11 +324,3 @@ const styles = StyleSheet.create({
   securityNote: { textAlign: 'center', fontSize: 12 },
 });
 
-// Mini config pays pour afficher le drapeau et préfixe
-const COUNTRIES: Record<string, { flag: string; phonePrefix: string }> = {
-  CM: { flag: '🇨🇲', phonePrefix: '+237' },
-  CD: { flag: '🇨🇩', phonePrefix: '+243' },
-  CG: { flag: '🇨🇬', phonePrefix: '+242' },
-  GA: { flag: '🇬🇦', phonePrefix: '+241' },
-  BF: { flag: '🇧🇫', phonePrefix: '+226' },
-};

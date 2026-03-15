@@ -33,13 +33,13 @@ async function getExchangeRates(): Promise<Record<string, number>> {
 
 // Catalogue des abonnements disponibles
 export const SUBSCRIPTION_CATALOG = [
-  // NETFLIX
+  // NETFLIX — prix officiels Afrique subsaharienne (réduits depuis 2023)
   {
     service: 'NETFLIX',
     name: 'Netflix Standard',
     description: 'Accès illimité à tout le contenu Netflix en HD. 2 écrans simultanés.',
     durationDays: 30,
-    priceUSD: 15.49,
+    priceUSD: 5.99, // Prix local Afrique Centrale (CM/CG/GA/BF)
     reloadlyProductId: 10,
     deepLinkIOS: 'nflx://netflix.com/redeem',
     deepLinkAndroid: 'nflx://netflix.com/redeem',
@@ -51,7 +51,7 @@ export const SUBSCRIPTION_CATALOG = [
     name: 'Netflix Premium',
     description: 'Accès Netflix en 4K Ultra HD. 4 écrans simultanés.',
     durationDays: 30,
-    priceUSD: 22.99,
+    priceUSD: 9.99, // Prix local Afrique Centrale
     reloadlyProductId: 10,
     deepLinkIOS: 'nflx://netflix.com/redeem',
     deepLinkAndroid: 'nflx://netflix.com/redeem',
@@ -59,13 +59,13 @@ export const SUBSCRIPTION_CATALOG = [
     iconUrl: 'https://cdn.subpay.africa/icons/netflix.png',
   },
 
-  // SPOTIFY
+  // SPOTIFY — prix officiels Afrique Centrale (CM/CG/GA/BF)
   {
     service: 'SPOTIFY',
     name: 'Spotify Premium 1 mois',
     description: 'Écoute musicale sans publicité, téléchargement hors ligne, qualité audio haute.',
     durationDays: 30,
-    priceUSD: 9.99,
+    priceUSD: 3.29, // Prix local Cameroun (spotify.com/cm-fr)
     reloadlyProductId: 1839,
     deepLinkIOS: 'spotify://redeem',
     deepLinkAndroid: 'spotify://redeem',
@@ -77,7 +77,7 @@ export const SUBSCRIPTION_CATALOG = [
     name: 'Spotify Premium 3 mois',
     description: 'Profitez de 3 mois de Spotify Premium sans interruption.',
     durationDays: 90,
-    priceUSD: 29.97,
+    priceUSD: 9.87, // 3 × $3.29 — prix local Cameroun
     reloadlyProductId: 1839,
     deepLinkIOS: 'spotify://redeem',
     deepLinkAndroid: 'spotify://redeem',
@@ -85,13 +85,13 @@ export const SUBSCRIPTION_CATALOG = [
     iconUrl: 'https://cdn.subpay.africa/icons/spotify.png',
   },
 
-  // APPLE MUSIC
+  // APPLE MUSIC — prix officiels Afrique Centrale ($2.99/mois au Cameroun)
   {
     service: 'APPLE_MUSIC',
     name: 'Apple Music 1 mois',
     description: 'Accès à plus de 100 millions de titres. Téléchargement et écoute hors ligne.',
     durationDays: 30,
-    priceUSD: 10.99,
+    priceUSD: 2.99, // Prix local Cameroun
     reloadlyProductId: 12,
     deepLinkIOS: 'itms-apps://apps.apple.com/redeem',
     deepLinkAndroid: 'https://apps.apple.com/redeem',
@@ -103,7 +103,7 @@ export const SUBSCRIPTION_CATALOG = [
     name: 'iTunes Gift Card $25',
     description: 'Carte cadeau Apple pour acheter musique, apps, films sur l\'App Store.',
     durationDays: 365,
-    priceUSD: 25.0,
+    priceUSD: 25.0, // Carte cadeau USD internationale
     reloadlyProductId: 12,
     deepLinkIOS: 'itms-apps://apps.apple.com/redeem',
     deepLinkAndroid: 'https://apps.apple.com/redeem',
@@ -164,9 +164,17 @@ export async function getProductsForCountry(country: CountryCode) {
         CM: 'XAF',
         BF: 'XOF',
       };
+      // Marge fixe par devise : 600 FCFA (XAF/XOF) ou équivalent en CDF
+      const MARGIN: Record<string, number> = {
+        XAF: 600,
+        XOF: 600,
+        CDF: 2800, // ~600 XAF équivalent en francs congolais
+        USD: 1,
+      };
       currency = countryCurrencies[country];
       const rate = rates[currency] || 1;
-      priceLocal = Math.ceil(product.priceUSD * rate * 1.15); // 15% marge
+      const cost = Math.ceil(product.priceUSD * rate);
+      priceLocal = cost + (MARGIN[currency] || 600);
     }
 
     return {

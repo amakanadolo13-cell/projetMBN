@@ -13,6 +13,7 @@ import orderRoutes from './routes/order.routes';
 import webhookRoutes from './routes/webhook.routes';
 import prisma from './config/database';
 import redis from './config/redis';
+import logger from './config/logger';
 
 const app = express();
 const httpServer = createServer(app);
@@ -98,7 +99,7 @@ app.use((_req, res) => {
 
 // Global error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error('[Server] Unhandled error:', err);
+  logger.error('Unhandled error', { message: err.message, stack: err.stack });
   res.status(500).json({ success: false, message: 'Erreur serveur interne' });
 });
 
@@ -109,11 +110,11 @@ io.on('connection', (socket) => {
   const userId = socket.handshake.auth.userId;
   if (userId) {
     socket.join(`user:${userId}`);
-    console.log(`[Socket] User ${userId} connected`);
+    logger.info('Socket connected', { userId });
   }
 
   socket.on('disconnect', () => {
-    if (userId) console.log(`[Socket] User ${userId} disconnected`);
+    if (userId) logger.info('Socket disconnected', { userId });
   });
 });
 
@@ -124,20 +125,15 @@ export { io };
 // Démarrage
 // ============================================================
 async function start() {
-  await redis.connect().catch(() => console.warn('[Redis] Running without Redis'));
+  await redis.connect().catch(() => logger.warn('Redis unavailable, running without cache'));
 
   const PORT = parseInt(process.env.PORT || '3000');
   httpServer.listen(PORT, () => {
-    console.log(`
-╔══════════════════════════════════════════╗
-║         SubPay Africa API v1.0           ║
-║   🌍 Serving Central Africa             ║
-╠══════════════════════════════════════════╣
-║  PORT: ${PORT}                               ║
-║  ENV:  ${process.env.NODE_ENV || 'development'}                   ║
-║  URL:  http://localhost:${PORT}              ║
-╚══════════════════════════════════════════╝
-    `);
+    logger.info('SubPay Africa API started', {
+      port: PORT,
+      env: process.env.NODE_ENV || 'development',
+      url: `http://localhost:${PORT}`,
+    });
   });
 }
 
